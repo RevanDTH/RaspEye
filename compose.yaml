@@ -1,0 +1,13 @@
+services:
+  web:
+    build:
+      context: ./frontend
+      dockerfile: dockerfile
+    ports:
+      - 80:5000
+  backend:
+    build:
+      context: ./backend
+      dockerfile: dockerfile
+    ports:
+      - 5000:5000
