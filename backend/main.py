@@ -6,7 +6,7 @@ app = Flask(__name__)
 payload_obj = None
 
 
-@app.route('/update_metrics', methods=["POST"])
+@app.route('/api/update_metrics', methods=["POST"])
 def update_metrics():
 	payload = request.data
 	global payload_obj
@@ -20,7 +20,7 @@ def update_metrics():
 	else:
 		return "false"
 	
-@app.route('/debug')
+@app.route('/api/debug')
 def debug_return():
 	if isinstance(payload_obj, dict):
 		return payload_obj

@@ -19,7 +19,7 @@ while True:
     }
 
     payload = dumps(payload_obj)
-    uri = "http://127.0.0.1:5050/update_metrics"
+    uri = "http://127.0.0.1:5050/api/update_metrics"
     response = post(url=uri, data=payload)
     print("Metrics sent . . .")
     sleep(15)
