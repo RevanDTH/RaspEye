@@ -4,10 +4,26 @@ services:
       context: ./frontend
       dockerfile: dockerfile
     ports:
-      - 80:8080
+      - "80:8080"
+    networks:
+      mynet:
+        ipv4_address: 172.20.0.10
+    depends_on:
+      - backend
+
   backend:
     build:
       context: ./backend
       dockerfile: dockerfile
     ports:
-      - 5050:5050
+      - "5050:5050"
+    networks:
+      mynet:
+        ipv4_address: 172.20.0.11
+
+networks:
+  mynet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16

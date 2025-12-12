@@ -1,31 +1,46 @@
-from flask import Flask,request
+from flask import Flask, request, jsonify
 import json
 
 app = Flask(__name__)
 
+# Centralized metrics store
 payload_obj = None
 
 
-@app.route('/api/update_metrics', methods=["POST"])
+@app.route('/api/metrics/update', methods=["POST"])
 def update_metrics():
-	payload = request.data
+	"""Receive metrics update from agent"""
 	global payload_obj
 	try:
+		payload = request.data
 		payload_obj = json.loads(payload.decode('utf-8'))
-	except Exception:
-		payload_obj = None
+		return jsonify({
+			"status": "success",
+			"message": "Metrics updated successfully",
+			"data": payload_obj
+		}), 200
+	except Exception as e:
+		return jsonify({
+			"status": "error",
+			"message": f"Failed to update metrics: {str(e)}",
+			"data": None
+		}), 400
 
-	if payload_obj:
-		return "success"
-	else:
-		return "false"
-	
-@app.route('/api/debug')
-def debug_return():
+
+@app.route('/api/metrics/latest')
+def latest_metrics():
 	if isinstance(payload_obj, dict):
-		return payload_obj
+		return jsonify({
+			"status": "success",
+			"message": "Latest metrics retrieved",
+			"data": payload_obj
+		}), 200
 	else:
-		return "No metrics found"
+		return jsonify({
+			"status": "error",
+			"message": "No metrics found",
+			"data": None
+		}), 404
 
 
 

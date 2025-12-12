@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RaspEye | Homepage</title>
+    <link rel="icon" href="{{ url_for('static', filename='img/logo.ico') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+    <meta http-equiv="refresh" content="5">
+
+</head>
+<body>
+    <div class="container header">
+        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="RaspEye Logo" class="logo">
+        <h1>RaspEye</h1>
+    </div>
+
+    <div class="container metrics">
+        <div class="metric-item">
+            <div class="metric-label">CPU Load</div>
+            <div class="metric-bar">
+                <div class="metric-fill" id="cpu-fill" style="width: {{metrics.cpu_percent}}%;"></div>
+            </div>
+            <div class="metric-value" id="cpu-value">{{ metrics.cpu_percent }}%</div>
+        </div>
+
+        <div class="metric-item">
+            <div class="metric-label">Memory Usage</div>
+            <div class="metric-bar">
+                <div class="metric-fill" id="memory-fill" style="width: {{metrics.memory}}%;"></div>
+            </div>
+            <div class="metric-value" id="memory-value">{{ metrics.memory }}%</div>
+        </div>
+
+        <div class="metric-item">
+            <div class="metric-label">Disk Usage</div>
+            <div class="metric-bar">
+                <div class="metric-fill" id="disk-fill" style="width: {{metrics.disk_percent}}%;"></div>
+            </div>
+            <div class="metric-value" id="disk-value">{{ metrics.disk_percent }}%</div>
+        </div>
+    </div>
+</body>
+</html>

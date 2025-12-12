@@ -1,0 +1,131 @@
+:root{
+    --bg: #0b0f14;
+    --surface: #0f1720;
+    --text: #e6eef6;
+    --muted: #98a2b3;
+    --accent: #60a5fa;
+}
+
+html,body{
+    height:100%;
+    margin:0;
+    font-size:16px;
+    background-color:var(--bg);
+    color:var(--text);
+    font-family:system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+}
+
+/* Basiskomponenten */
+a{ color:var(--accent); text-decoration:none; }
+a:hover{ text-decoration:underline; }
+
+.container{
+    background-color:transparent;
+    padding:1rem;
+}
+
+.header{
+    display:flex;
+    flex-direction:row;
+    align-items:center;
+    justify-content:center;
+    gap:1rem;
+    margin-bottom:2rem;
+}
+
+.header .logo{
+    width:80px;
+    height:80px;
+    object-fit:contain;
+}
+
+.header h1{
+    margin:0;
+    font-size:2.5rem;
+    font-weight:600;
+    text-align:center;
+}
+
+/* Metrics */
+.metrics{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:2rem;
+    max-width:500px;
+    margin:0 auto;
+}
+
+.metric-item{
+    width:100%;
+}
+
+.metric-label{
+    font-size:1rem;
+    font-weight:500;
+    margin-bottom:0.5rem;
+    color:var(--text);
+}
+
+.metric-bar{
+    width:100%;
+    height:30px;
+    background-color:var(--surface);
+    border:1px solid rgba(255,255,255,0.04);
+    border-radius:6px;
+    overflow:hidden;
+}
+
+.metric-fill{
+    height:100%;
+    background:linear-gradient(90deg, #60a5fa, #3b82f6);
+    transition:width 0.5s ease;
+}
+
+.metric-value{
+    font-size:0.9rem;
+    color:var(--muted);
+    margin-top:0.3rem;
+    text-align:right;
+}
+
+/* Formulare / Buttons */
+input, textarea, select, button{
+    background:var(--surface);
+    color:var(--text);
+    border:1px solid rgba(255,255,255,0.04);
+    padding:0.5rem;
+    border-radius:6px;
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+    transition:background-color 0.2s ease;
+}
+
+button:hover{
+    background-color:rgba(96, 165, 250, 0.1);
+}
+
+button:focus, input:focus, textarea:focus, select:focus{
+    outline:none;
+    border-color:var(--accent);
+    box-shadow:0 0 0 2px rgba(96, 165, 250, 0.2);
+}
+
+/* Kontrast für kleinere Texte */
+.muted{ color:var(--muted); font-size:0.9em; }
+
+/* Respektiere Benutzer Bewegungspräferenz */
+@media (prefers-reduced-motion: reduce){
+    * {
+        animation-duration:0.01ms !important;
+        animation-iteration-count:1 !important;
+        transition-duration:0.01ms !important;
+    }
+}
+
