@@ -23,7 +23,7 @@ def update_metrics():
 @app.route('/debug')
 def debug_return():
 	if isinstance(payload_obj, dict):
-		return str(payload_obj.get('memory', "No metrics found"))
+		return payload_obj
 	else:
 		return "No metrics found"
 
