@@ -36,3 +36,8 @@ Please make sure that you have the docker engine installed on your Raspberry Pi 
     `docker compose up -d`
 
 Now you're ready and you can access RaspEye with the local IP-Adresse of your Raspberry Pi.
+
+
+## Uninstall
+
+If you want to uninstall RaspEye, just run the setup.py and say yes to the first prompt.
