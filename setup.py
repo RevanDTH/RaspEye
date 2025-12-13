@@ -3,14 +3,50 @@ import os
 import subprocess
 from sys import executable
 
+
 def run(cmd: list[str]) -> None:
     subprocess.run(cmd, check=True)
 
 
+def uninstall(project_dir: Path) -> int:
+    print("Uninstalling RaspEye . . .")
+
+    service_name = "raspEye-agent.service"
+    service_path = Path("/etc/systemd/system") / service_name
+    runner_path = Path("/usr/local/bin/raspEye-agent-runner.sh")
+    venv_dir = project_dir / ".venv"
+
+    if service_path.exists():
+        run(["systemctl", "stop", service_name])
+        run(["systemctl", "disable", service_name])
+        service_path.unlink()
+        run(["systemctl", "daemon-reload"])
+
+    if runner_path.exists():
+        runner_path.unlink()
+
+    if venv_dir.exists():
+        subprocess.run(["rm", "-rf", str(venv_dir)], check=True)
+
+    print("RaspEye successfully uninstalled.")
+    return 0
+
+
 def main() -> int:
+    project_dir = Path.cwd()
+
+    uninstall_prompt = input(
+        "Do you want to uninstall RaspEye? (Y/N) "
+    ).strip().lower()
+
+    if uninstall_prompt == "y":
+        return uninstall(project_dir)
+    elif uninstall_prompt != "n":
+        print("Invalid input. Please enter Y or N.")
+        return 2
+
     print("Installing RaspEye on your device . . .")
 
-    project_dir = Path.cwd()
     venv_dir = project_dir / ".venv"
     venv_python = venv_dir / "bin" / "python"
     venv_pip = [str(venv_python), "-m", "pip"]
@@ -21,7 +57,9 @@ def main() -> int:
     run(venv_pip + ["install", "--upgrade", "pip"])
     run(venv_pip + ["install", "-r", str(project_dir / "requirements.txt")])
 
-    system_service = input("Do you want RaspEye to create a service for the agent? (Y/N) ").strip().lower()
+    system_service = input(
+        "Do you want RaspEye to create a service for the agent? (Y/N) "
+    ).strip().lower()
 
     if system_service == "y":
         agent_location = project_dir / "agent.py"
@@ -31,7 +69,6 @@ def main() -> int:
 set -e
 exec "{venv_python}" "{agent_location}"
 """
-
         runner_path.write_text(runner_content)
         os.chmod(runner_path, 0o755)
 
@@ -49,22 +86,17 @@ RestartSec=2
 [Install]
 WantedBy=multi-user.target
 """
-
-        # Write service file (needs root)
         service_path.write_text(service_content)
 
         run(["systemctl", "daemon-reload"])
         run(["systemctl", "enable", "--now", "raspEye-agent.service"])
 
-        print("Setup run successfully!")
-        return 0
+    elif system_service != "n":
+        print("Invalid input. Please enter Y or N.")
+        return 2
 
-    if system_service == "n":
-        print("Setup run successfully!")
-        return 0
-
-    print("Invalid input. Please enter Y or N.")
-    return 2
+    print("Setup run successfully!")
+    return 0
 
 
 if __name__ == "__main__":
