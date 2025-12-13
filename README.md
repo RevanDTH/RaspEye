@@ -12,21 +12,27 @@ Please make sure that you have the docker engine installed on your Raspberry Pi 
 ## Installation guide
 
 1. Clone the latest version of RaspEye from Github
-`git pull https://github.com/RevanDTH/RaspEye.git` 
+
+    `git pull https://github.com/RevanDTH/RaspEye.git` 
 
 2. Navigate to the downloaded directory
-`cd RaspEye`
+
+    `cd RaspEye`
 
 3. Run setup.py and follow the instructions
-`python setup.py`
+
+    `python setup.py`
 
 4. (Optional) After the setup your agent should already be running but you can check the state of the agent by entering the following command
-`sudo systemctl status raspEye-agent.service`
+
+    `sudo systemctl status raspEye-agent.service`
 
 5. Build both docker containers (and the network)
-`docker compose build`
+
+    `docker compose build`
 
 6. Start both containers in detached mode
-`docker compose up -d`
+
+    `docker compose up -d`
 
 Now you're ready and you can access RaspEye with the local IP-Adresse of your Raspberry Pi.
