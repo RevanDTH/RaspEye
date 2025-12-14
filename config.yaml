@@ -1,0 +1,9 @@
+backend:
+
+frontend:
+
+agent:
+  send_url: http://127.0.0.1:5050/api/metrics/update
+  display_cpu: True
+  display_memory: True
+  display_disk: True
